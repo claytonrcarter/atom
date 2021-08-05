@@ -60,6 +60,16 @@ describe('SyntaxScopeMap', () => {
     expect(map.get(['a', '"'], [0, 1], false)).toBe('z');
   });
 
+  it('correctly parses anonymous tokens', () => {
+    const map = new SyntaxScopeMap({
+      '"\\""': 'a',
+      '"\\\\"': 'b',
+    });
+
+    expect(map.get(['"'], [0], false)).toBe('a');
+    expect(map.get(['\\'], [0], false)).toBe('b');
+  });
+
   it('supports the wildcard selector', () => {
     const map = new SyntaxScopeMap({
       '*': 'w',
